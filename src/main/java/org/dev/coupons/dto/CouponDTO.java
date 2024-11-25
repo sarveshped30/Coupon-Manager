@@ -14,4 +14,5 @@ public class CouponDTO {
     private String discountType;
     private BigDecimal discountValue;
     private String expiryDate;
+    private String description;
 }

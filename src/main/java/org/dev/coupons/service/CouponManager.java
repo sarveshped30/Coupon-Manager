@@ -1,9 +1,10 @@
 package org.dev.coupons.service;
 
+import org.dev.coupons.exception.PersistenceException;
 import org.dev.coupons.dto.CouponDTO;
-import org.json.JSONObject;
+import org.dev.coupons.vo.CouponVO;
 
 public interface CouponManager {
 
-   public void create(CouponDTO couponDTO);
+   CouponVO create(CouponDTO couponDTO) throws PersistenceException;
 }

@@ -1,8 +1,9 @@
 package org.dev.coupons.controller;
 
-import netscape.javascript.JSObject;
+import org.dev.coupons.exception.PersistenceException;
 import org.dev.coupons.dto.CouponDTO;
 import org.dev.coupons.service.CouponManager;
+import org.dev.coupons.vo.CouponVO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +21,8 @@ public class CouponController {
     }
 
     @PostMapping(path = "/create", produces = "application/json")
-    public ResponseEntity<JSObject> create(@RequestBody CouponDTO couponDTO) {
-        couponManager.create(couponDTO);
-        return ResponseEntity.ok(null);
+    public ResponseEntity<CouponVO> create(@RequestBody CouponDTO couponDTO) throws PersistenceException {
+        return ResponseEntity.ok(couponManager.create(couponDTO));
     }
 
 

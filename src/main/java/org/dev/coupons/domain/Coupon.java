@@ -12,7 +12,6 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@Builder
 public class Coupon {
 
     @Id
@@ -22,18 +21,21 @@ public class Coupon {
     private BigDecimal discountValue;
     private boolean isUsed;
     private LocalDate expiryDate;       //create custom annotation for checking expiryDate
-    private LocalDate createDate = LocalDate.now();
+    private final LocalDate createDate = LocalDate.now();
+    private String description;
 
     protected Coupon() {
 
     }
 
+    @Builder
     public Coupon(String code, CouponType type, DiscountType discountType, BigDecimal discountValue,
-                  LocalDate expiryDate) {
+                  LocalDate expiryDate, String description) {
         this.code = code;
         this.type = type;
         this.discountType = discountType;
         this.discountValue = discountValue;
         this.expiryDate = expiryDate;
+        this.description = description;
     }
 }
