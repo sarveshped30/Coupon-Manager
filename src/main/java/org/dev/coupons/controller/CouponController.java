@@ -1,5 +1,6 @@
 package org.dev.coupons.controller;
 
+import jakarta.validation.Valid;
 import org.dev.coupons.exception.PersistenceException;
 import org.dev.coupons.dto.CouponDTO;
 import org.dev.coupons.service.CouponManager;
@@ -21,7 +22,7 @@ public class CouponController {
     }
 
     @PostMapping(path = "/create", produces = "application/json")
-    public ResponseEntity<CouponVO> create(@RequestBody CouponDTO couponDTO) throws PersistenceException {
+    public ResponseEntity<CouponVO> create(@RequestBody @Valid CouponDTO couponDTO) throws PersistenceException {
         return ResponseEntity.ok(couponManager.create(couponDTO));
     }
 

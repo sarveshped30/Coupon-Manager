@@ -32,7 +32,8 @@ public class CouponManagerImpl implements CouponManager {
                 .expiryDate(LocalDate.parse(couponDTO.getExpiryDate()))
                 .description(couponDTO.getDescription())
                 .build();
-        Coupon saved = Optional.of(couponRepository.save(coupon)).orElseThrow(PersistenceException::new);
+        Coupon saved = Optional.of(couponRepository.save(coupon)).orElseThrow(() ->
+                new PersistenceException("Unable to persist coupon data, please try after sometime."));
         return new CouponVO(saved);
     }
 }
