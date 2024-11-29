@@ -1,7 +1,6 @@
 package org.dev.coupons.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import org.dev.coupons.enums.CouponType;
@@ -15,8 +14,13 @@ import java.time.LocalDate;
 public class Coupon {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false, unique = true)
     private String code;        //create custom annotation for checking uniqueness
+    @Enumerated(EnumType.STRING)
     private CouponType type;
+    @Enumerated(EnumType.STRING)
     private DiscountType discountType;
     private BigDecimal discountValue;
     private boolean isUsed;
