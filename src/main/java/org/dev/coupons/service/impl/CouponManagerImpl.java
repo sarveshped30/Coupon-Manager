@@ -5,12 +5,15 @@ import org.dev.coupons.domain.Coupon;
 import org.dev.coupons.dto.CouponDTO;
 import org.dev.coupons.enums.CouponType;
 import org.dev.coupons.enums.DiscountType;
+import org.dev.coupons.exception.ResourceNotFoundException;
 import org.dev.coupons.repository.CouponRepository;
 import org.dev.coupons.service.CouponManager;
 import org.dev.coupons.vo.CouponVO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,5 +38,26 @@ public class CouponManagerImpl implements CouponManager {
         Coupon saved = Optional.of(couponRepository.save(coupon)).orElseThrow(() ->
                 new PersistenceException("Unable to persist coupon data, please try after sometime."));
         return new CouponVO(saved);
+    }
+
+    @Override
+    public List<CouponVO> findAllCoupons() {
+        List<CouponVO> couponVOS = new ArrayList<>();
+        couponRepository.findAll().forEach(coupon -> couponVOS.add(new CouponVO(coupon)));
+        return couponVOS;
+    }
+
+    @Override
+    public List<CouponVO> findAllActiveCoupons() {
+        List<CouponVO> couponVOS = new ArrayList<>();
+        couponRepository.findAllActiveCoupons().forEach(coupon -> couponVOS.add(new CouponVO(coupon)));
+        return couponVOS;
+    }
+
+    @Override
+    public CouponVO findByCode(String code) throws ResourceNotFoundException {
+        Coupon coupon = couponRepository.findByCode(code).orElseThrow(
+                () -> new ResourceNotFoundException("Coupon Not Found for given code : " + code));
+        return new CouponVO(coupon);
     }
 }
