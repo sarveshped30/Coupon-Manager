@@ -60,4 +60,11 @@ public class CouponManagerImpl implements CouponManager {
                 () -> new ResourceNotFoundException("Coupon Not Found for given code : " + code));
         return new CouponVO(coupon);
     }
+
+    @Override
+    public void delete(String code) throws ResourceNotFoundException {
+        Coupon coupon = couponRepository.findByCode(code).orElseThrow(
+                () -> new ResourceNotFoundException("Coupon Not Found for given code : " + code));
+        couponRepository.delete(coupon);
+    }
 }

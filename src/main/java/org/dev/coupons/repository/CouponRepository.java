@@ -15,4 +15,6 @@ public interface CouponRepository extends CrudRepository<Coupon, String> {
     List<Coupon> findAllActiveCoupons();
 
     Optional<Coupon> findByCode(String code);
+
+
 }

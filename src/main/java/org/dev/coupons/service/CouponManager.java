@@ -16,4 +16,6 @@ public interface CouponManager {
 
    CouponVO findByCode(String code) throws ResourceNotFoundException;
 
+   void delete(String code) throws ResourceNotFoundException;
+
 }

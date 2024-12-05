@@ -41,4 +41,10 @@ public class CouponController {
         return ResponseEntity.ok(couponManager.findByCode(code));
     }
 
+    @DeleteMapping(path = "/delete/{code}")
+    public ResponseEntity<String> delete(@PathVariable(name = "code") String code) throws ResourceNotFoundException{
+        couponManager.delete(code);
+        return ResponseEntity.ok("Coupon with code " + code + " deleted.");
+    }
+
 }
