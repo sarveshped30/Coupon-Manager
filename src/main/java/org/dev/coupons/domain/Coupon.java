@@ -3,8 +3,10 @@ package org.dev.coupons.domain;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
+import org.dev.coupons.dto.UpdateCouponDTO;
 import org.dev.coupons.enums.CouponType;
 import org.dev.coupons.enums.DiscountType;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,6 +28,8 @@ public class Coupon {
     private boolean isUsed;
     private LocalDate expiryDate;       //create custom annotation for checking expiryDate
     private final LocalDate createDate = LocalDate.now();
+    @LastModifiedDate
+    private LocalDate updateDate;
     private String description;
 
     protected Coupon() {
@@ -41,5 +45,14 @@ public class Coupon {
         this.discountValue = discountValue;
         this.expiryDate = expiryDate;
         this.description = description;
+    }
+
+    public Coupon update(UpdateCouponDTO update) {
+        this.type = update.getType() != null ? CouponType.valueOf(update.getType()) : type;
+        this.discountType = update.getDiscountType() != null ? DiscountType.valueOf(update.getType()) : discountType;
+        this.discountValue = update.getDiscountValue() != null ? update.getDiscountValue() : discountValue;
+        this.expiryDate = update.getExpiryDate() != null ? LocalDate.parse(update.getExpiryDate()) : expiryDate;
+        this.description = update.getDescription() != null ? update.getDescription() : description;
+        return this;
     }
 }

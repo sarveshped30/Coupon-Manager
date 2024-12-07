@@ -1,5 +1,6 @@
 package org.dev.coupons.service;
 
+import org.dev.coupons.dto.UpdateCouponDTO;
 import org.dev.coupons.exception.PersistenceException;
 import org.dev.coupons.dto.CouponDTO;
 import org.dev.coupons.exception.ResourceNotFoundException;
@@ -17,5 +18,7 @@ public interface CouponManager {
    CouponVO findByCode(String code) throws ResourceNotFoundException;
 
    void delete(String code) throws ResourceNotFoundException;
+
+   CouponVO update(UpdateCouponDTO updateCouponDTO) throws ResourceNotFoundException, PersistenceException;
 
 }

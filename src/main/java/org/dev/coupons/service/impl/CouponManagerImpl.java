@@ -1,5 +1,6 @@
 package org.dev.coupons.service.impl;
 
+import org.dev.coupons.dto.UpdateCouponDTO;
 import org.dev.coupons.exception.PersistenceException;
 import org.dev.coupons.domain.Coupon;
 import org.dev.coupons.dto.CouponDTO;
@@ -66,5 +67,13 @@ public class CouponManagerImpl implements CouponManager {
         Coupon coupon = couponRepository.findByCode(code).orElseThrow(
                 () -> new ResourceNotFoundException("Coupon Not Found for given code : " + code));
         couponRepository.delete(coupon);
+    }
+
+    @Override
+    public CouponVO update(UpdateCouponDTO couponDTO) throws ResourceNotFoundException, PersistenceException {
+        Coupon coupon = couponRepository.findByCode(couponDTO.getCode())
+                .orElseThrow(() -> new ResourceNotFoundException("Coupon Not Found for given code : " + couponDTO.getCode()));
+        return new CouponVO(Optional.of(couponRepository.save(coupon.update(couponDTO))).orElseThrow(() ->
+                new PersistenceException("Unable to update coupon data, please try after sometime.")));
     }
 }

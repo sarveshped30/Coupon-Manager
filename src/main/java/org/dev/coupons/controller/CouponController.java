@@ -1,6 +1,7 @@
 package org.dev.coupons.controller;
 
 import jakarta.validation.Valid;
+import org.dev.coupons.dto.UpdateCouponDTO;
 import org.dev.coupons.exception.PersistenceException;
 import org.dev.coupons.dto.CouponDTO;
 import org.dev.coupons.exception.ResourceNotFoundException;
@@ -36,7 +37,7 @@ public class CouponController {
         return ResponseEntity.ok(couponManager.findAllActiveCoupons());
     }
 
-    @GetMapping(path = "/fetch/{code}")
+    @GetMapping(path = "/fetch/{code}", produces = "application/json")
     public ResponseEntity<CouponVO> fetchByCode(@PathVariable String code) throws ResourceNotFoundException {
         return ResponseEntity.ok(couponManager.findByCode(code));
     }
@@ -45,6 +46,11 @@ public class CouponController {
     public ResponseEntity<String> delete(@PathVariable(name = "code") String code) throws ResourceNotFoundException{
         couponManager.delete(code);
         return ResponseEntity.ok("Coupon with code " + code + " deleted.");
+    }
+
+    @PutMapping(path = "/update", produces = "application/json")
+    public ResponseEntity<CouponVO> update(@RequestBody @Valid UpdateCouponDTO update) throws ResourceNotFoundException {
+        return ResponseEntity.ok(couponManager.update(update));
     }
 
 }
